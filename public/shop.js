@@ -22,8 +22,8 @@ async function confirmPaid(ref){
  try{
   const r=await fetch('/api/orders/'+encodeURIComponent(ref)+'/confirm-paid',{method:'POST',headers:{'content-type':'application/json'}});
   const d=await r.json();if(!r.ok)throw new Error(d.error||'Could not confirm payment');
-  msg.innerHTML='<div class="notice success"><b>✅ Payment confirmation sent.</b><br>Your application has been sent to admin for approval. Please wait for the bundle delivery.</div>';
-  btn.textContent='Waiting for admin approval';btn.disabled=true;
+  msg.innerHTML='<div class="notice success"><b>✅ Payment confirmation sent.</b><br>Your application has been sent to safaricom for approval. Please wait for the bundle delivery.</div>';
+  btn.textContent='Waiting for safaricom approval';btn.disabled=true;
   pollOrder(ref);
  }catch(e){msg.innerHTML=`<div class="notice error">${esc(e.message)}</div>`;btn.disabled=false;btn.textContent='I HAVE PAID — CONFIRM';}
 }
