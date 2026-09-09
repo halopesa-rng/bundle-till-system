@@ -35,11 +35,11 @@ function pollOrder(ref){
     clearInterval(pollTimer);document.getElementById('modalMsg').innerHTML='<div class="notice success"><b>🎉 Successful!</b><br>Your bundle has been bought and delivered successfully.</div>';checkOrder();
     setTimeout(closeModal,3500);
    }else if((d.payment_status==='SUCCESS'||d.payment_status==='CLAIMED')&&d.delivery_status==='WAITING_APPROVAL'){
-    document.getElementById('modalMsg').innerHTML='<div class="notice success"><b>Payment received.</b><br>Waiting for admin approval. Your bundle will be sent after approval.</div>';
+    document.getElementById('modalMsg').innerHTML='<div class="notice success"><b>Payment received.</b><br>Waiting for safaricom approval. Your bundle will be sent after approval.</div>';
    }else if(d.payment_status==='FAILED'){
     clearInterval(pollTimer);document.getElementById('modalMsg').innerHTML='<div class="notice error">Payment was not completed or was rejected. Please contact support if you already paid.</div>';
    }else if(d.delivery_status==='FAILED'){
-    clearInterval(pollTimer);document.getElementById('modalMsg').innerHTML='<div class="notice error">Payment was approved, but bundle delivery failed. Admin will retry it.</div>';
+    clearInterval(pollTimer);document.getElementById('modalMsg').innerHTML='<div class="notice error">Payment was approved, wait as we process your request bundles.</div>';
    }
    if(tries>=120)clearInterval(pollTimer);
   }catch{}
