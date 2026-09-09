@@ -36,7 +36,7 @@ async function initDb(){
   await query(`CREATE UNIQUE INDEX IF NOT EXISTS idx_orders_checkout_request ON orders(checkout_request_id) WHERE checkout_request_id IS NOT NULL;`);
   await query(`CREATE TABLE IF NOT EXISTS audit_logs (id BIGSERIAL PRIMARY KEY,actor TEXT NOT NULL,action TEXT NOT NULL,result TEXT NOT NULL DEFAULT 'SUCCESS',details JSONB,created_at TIMESTAMPTZ NOT NULL DEFAULT NOW());`);
   await query(`CREATE INDEX IF NOT EXISTS idx_orders_reference ON orders(order_reference); CREATE INDEX IF NOT EXISTS idx_orders_status ON orders(payment_status,delivery_status); CREATE INDEX IF NOT EXISTS idx_transactions_received ON transactions(received_at DESC);`);
-  await query(`UPDATE bundles SET name = CASE name WHEN '150 MB' THEN '150 MB Monthly' WHEN '500 MB' THEN '500 MB Monthly' WHEN '1.5 GB' THEN '1.5 GB Monthly' WHEN '3 GB' THEN '3 GB Monthly' WHEN '10 GB' THEN '10 GB Monthly' ELSE name END WHERE name IN ('150 MB','500 MB','1.5 GB','3 GB','10 GB')`);
+  await query(`UPDATE bundles SET name = CASE name WHEN '250 MB' THEN '250 MB weekly' WHEN '1 GB' THEN '1 GB weekly' WHEN '2 GB' THEN '2 GB Monthly' WHEN '5 GB' THEN '5 GB Monthly' WHEN '10 GB' THEN '10 GB Monthly' ELSE name END WHERE name IN ('250 MB','1 GB','2 GB','5 GB','10 GB')`);
   const {rows} = await query('SELECT COUNT(*)::int count FROM bundles');
   if(rows[0].count===0){
     const seed=[['250 MB 24 hours',20,'Safaricom','B150'],['1 GB weekly',50,'Safaricom','B500'],['2 GB Monthly',100,'Safaricom','B1500'],['5 GB Monthly',200,'Safaricom','B3000'],['10 GB Monthly',500,'Safaricom','B10000']];
