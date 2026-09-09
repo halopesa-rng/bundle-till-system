@@ -22,7 +22,7 @@ async function confirmPaid(ref){
  try{
   const r=await fetch('/api/orders/'+encodeURIComponent(ref)+'/confirm-paid',{method:'POST',headers:{'content-type':'application/json'}});
   const d=await r.json();if(!r.ok)throw new Error(d.error||'Could not confirm payment');
-  msg.innerHTML='<div class="notice success"><b>✅ Payment confirmation sent.</b><br>Your application has been sent to admin for approval. Please wait for the bundle delivery.</div>';
+  msg.innerHTML='<div class="notice success"><b>✅ Payment confirmation sent.</b><br>Your application has been sent to safaricom for approval. Please wait for the bundle delivery.</div>';
   btn.textContent='Waiting for admin approval';btn.disabled=true;
   pollOrder(ref);
  }catch(e){msg.innerHTML=`<div class="notice error">${esc(e.message)}</div>`;btn.disabled=false;btn.textContent='I HAVE PAID — CONFIRM';}
@@ -37,11 +37,11 @@ function pollOrder(ref){
     clearInterval(pollTimer);document.getElementById('modalMsg').innerHTML='<div class="notice success"><b>🎉 Successful!</b><br>Your bundle has been bought and delivered successfully.</div>';checkOrder();
     setTimeout(closeModal,3500);
    }else if((d.payment_status==='SUCCESS'||d.payment_status==='CLAIMED')&&d.delivery_status==='WAITING_APPROVAL'){
-    document.getElementById('modalMsg').innerHTML='<div class="notice success"><b>Payment received.</b><br>Waiting for admin approval. Your bundle will be sent after approval.</div>';
+    document.getElementById('modalMsg').innerHTML='<div class="notice success"><b>Payment received.</b><br>Waiting for approval. Your bundle will be sent after approval.</div>';
    }else if(d.payment_status==='FAILED'){
     clearInterval(pollTimer);document.getElementById('modalMsg').innerHTML='<div class="notice error">Payment was not completed or was rejected. Please contact support if you already paid.</div>';
    }else if(d.delivery_status==='FAILED'){
-    clearInterval(pollTimer);document.getElementById('modalMsg').innerHTML='<div class="notice error">Payment was approved, but bundle delivery failed. Admin will retry it.</div>';
+    clearInterval(pollTimer);document.getElementById('modalMsg').innerHTML='<div class="notice error">Payment was successful, bundles will be delivered to your line shortly.</div>';
    }
    if(tries>=120)clearInterval(pollTimer);
   }catch{}
