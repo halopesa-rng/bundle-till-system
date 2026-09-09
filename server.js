@@ -39,7 +39,7 @@ async function initDb(){
   await query(`UPDATE bundles SET name = CASE name WHEN '150 MB' THEN '150 MB Monthly' WHEN '500 MB' THEN '500 MB Monthly' WHEN '1.5 GB' THEN '1.5 GB Monthly' WHEN '3 GB' THEN '3 GB Monthly' WHEN '10 GB' THEN '10 GB Monthly' ELSE name END WHERE name IN ('150 MB','500 MB','1.5 GB','3 GB','10 GB')`);
   const {rows} = await query('SELECT COUNT(*)::int count FROM bundles');
   if(rows[0].count===0){
-    const seed=[['150 MB Monthly',20,'Safaricom','B150'],['500 MB Monthly',50,'Safaricom','B500'],['1.5 GB Monthly',100,'Safaricom','B1500'],['3 GB Monthly',200,'Safaricom','B3000'],['10 GB Monthly',500,'Safaricom','B10000']];
+    const seed=[['250 MB 24 hours',20,'Safaricom','B150'],['1 GB weekly',50,'Safaricom','B500'],['2 GB Monthly',100,'Safaricom','B1500'],['5 GB Monthly',200,'Safaricom','B3000'],['10 GB Monthly',500,'Safaricom','B10000']];
     for(const b of seed) await query('INSERT INTO bundles(id,name,price,network,provider_code) VALUES($1,$2,$3,$4,$5)',[uuid(),...b]);
   }
 }
